@@ -39,7 +39,7 @@ developers := List(
   Developer("easel", "Erik LaBianca", "erik.labianca@gmail.com", url("https://github.com/easel"))
 )
 publishArtifact in Test := false
-bintrayReleaseOnPublish := false //We're releasing via travis, set to true to automatically release on publish instead
+bintrayReleaseOnPublish := true //We're releasing via travis, set to true to automatically release on publish instead
 publishMavenStyle := true
 bintrayRepository := "maven"
-bintrayOrganization in bintray := Some("7thsense")
+bintrayOrganization := Some("7thsense")
