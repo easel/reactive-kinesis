@@ -1,6 +1,6 @@
 addSbtPlugin("com.dwijnand"      % "sbt-travisci" % "1.1.1")
 addSbtPlugin("com.lucidchart"    % "sbt-scalafmt" % "1.15")
-addSbtPlugin("com.typesafe.sbt"  % "sbt-git"      % "0.9.3")
+addSbtPlugin("com.typesafe.sbt"  % "sbt-git"      % "1.0.0")
 addSbtPlugin("de.heikoseeberger" % "sbt-header"   % "5.0.0")
 
 addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.5.1" exclude("org.eclipse.jgit", "org.eclipse.jgit"))
