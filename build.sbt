@@ -43,10 +43,10 @@ lazy val library =
       // TODO: Upgrade this to 1.9.x when this issue is resolved and exposed in localstack:
       // https://github.com/mhart/kinesalite/issues/59
       // 1.9.3 breaks KinesisSourceGraphStageIntegrationSpec and ConsumerProcessingManagerIntegrationSpec
-      "com.amazonaws" % "amazon-kinesis-client" % "1.9.3" % Compile
+      "com.amazonaws" % "amazon-kinesis-client" % "1.11.2" % Compile
       excludeAll (ExclusionRule(organization = "com.fasterxml.jackson.core"),
       ExclusionRule(organization = "com.fasterxml.jackson.dataformat")),
-      "com.amazonaws" % "amazon-kinesis-producer" % "0.12.11" % Compile
+      "com.amazonaws" % "amazon-kinesis-producer" % "0.13.1" % Compile
       excludeAll (ExclusionRule(organization = "com.fasterxml.jackson.core"),
       ExclusionRule(organization = "com.fasterxml.jackson.dataformat"))
     )

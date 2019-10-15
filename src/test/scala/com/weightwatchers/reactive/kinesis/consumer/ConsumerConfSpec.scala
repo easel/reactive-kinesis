@@ -87,6 +87,9 @@ class ConsumerConfSpec
         |         # Default: 60000
         |         shardSyncIntervalMillis = 70000
         |
+        |         # Default: false
+        |         shardSyncStrategyType = SHARD_END
+        |
         |         # Default: true
         |         cleanupLeasesUponShardCompletion = false
         |
