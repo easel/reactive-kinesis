@@ -101,7 +101,7 @@ class KinesisSinkGraphStage(producerActorProps: => Props,
             val element = grab(in)
             outstandingMessageCount += 1
             producerActor ! SendWithCallback(element)
-            if (outstandingMessageCount < maxOutstanding) pull(in)
+            if (outstandingMessageCount < maxOutstanding && !hasBeenPulled(in)) pull(in)
           }
 
           override def onUpstreamFinish(): Unit = {
@@ -132,7 +132,7 @@ class KinesisSinkGraphStage(producerActorProps: => Props,
             if (outstandingMessageCount == 0) completeStage()
           } else {
             // signal demand
-            if (outstandingMessageCount < maxOutstanding) pull(in)
+            if (outstandingMessageCount < maxOutstanding && !hasBeenPulled(in)) pull(in)
           }
 
         case (_, SendFailed(event, messageId, reason)) =>
