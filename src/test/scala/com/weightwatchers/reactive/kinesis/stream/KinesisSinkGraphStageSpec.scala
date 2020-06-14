@@ -45,9 +45,8 @@ class KinesisSinkGraphStageSpec
     with ScalaFutures
     with Eventually {
 
-  implicit val materializer: Materializer = ActorMaterializer()
-  implicit val ec                         = system.dispatcher
-  implicit val defaultPatience            = PatienceConfig(5.seconds, interval = 50.millis)
+  implicit val ec              = system.dispatcher
+  implicit val defaultPatience = PatienceConfig(5.seconds, interval = 50.millis)
 
   "KinesisSinkGraph" - {
 

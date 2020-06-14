@@ -50,8 +50,7 @@ class KinesisSourceGraphStageSpec
     with ScalaFutures
     with ImplicitSender {
 
-  implicit val materializer: Materializer = ActorMaterializer()
-  implicit val ec                         = system.dispatcher
+  implicit val ec = system.dispatcher
   implicit val defaultPatience =
     PatienceConfig(timeout = Span(3, Seconds), interval = Span(50, Millis))
 
