@@ -231,6 +231,8 @@ class ConsumerConfSpec
         |         # True if we should ignore child shards which have open parents
         |         # Default: not set
         |         ignoreUnexpectedChildShards = false
+        |         
+        |         billingMode = PROVISIONED
         |      }
         |
         |   }
