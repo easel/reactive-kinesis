@@ -96,17 +96,27 @@ object KinesisProducerActor {
     val kinesisProducer =
       KinesisProducer(producerConf)
 
-    val props = Props(classOf[KinesisProducerActor], kinesisProducer, producerConf.throttlingConf)
+    val props =
+      Props(classOf[KinesisProducerActor], kinesisProducer, producerConf.throttlingConf, true)
     producerConf.dispatcher.fold(props)(props.withDispatcher)
   }
+
+  def props(kinesisProducer: KinesisProducer,
+            maxOutstandingRequests: Int,
+            stopProducer: Boolean): Props =
+    Props(classOf[KinesisProducerActor],
+          kinesisProducer,
+          Some(ThrottlingConf(maxOutstandingRequests)),
+          stopProducer)
 
   def props(kinesisProducer: KinesisProducer, maxOutstandingRequests: Int): Props =
     Props(classOf[KinesisProducerActor],
           kinesisProducer,
-          Some(ThrottlingConf(maxOutstandingRequests)))
+          Some(ThrottlingConf(maxOutstandingRequests)),
+          false)
 
   def props(kinesisProducer: KinesisProducer): Props =
-    Props(classOf[KinesisProducerActor], kinesisProducer, None)
+    Props(classOf[KinesisProducerActor], kinesisProducer, None, false)
 }
 
 /**
@@ -125,7 +135,9 @@ object KinesisProducerActor {
   * @param producer         an instance of the [[KinesisProducer]]
   * @param throttlingConfig Configuration which defines whether and how often to throttle.
   */
-class KinesisProducerActor(producer: KinesisProducer, throttlingConfig: Option[ThrottlingConf])
+class KinesisProducerActor(producer: KinesisProducer,
+                           throttlingConfig: Option[ThrottlingConf],
+                           stopProducer: Boolean)
     extends Actor
     with LazyLogging
     with UnboundedStash {
@@ -218,6 +230,6 @@ class KinesisProducerActor(producer: KinesisProducer, throttlingConfig: Option[T
 
   override def aroundPostStop(): Unit = {
     //TODO what if we're currently throttled and have messages stashed??
-    producer.stop()
+    if (stopProducer) producer.stop()
   }
 }

@@ -25,9 +25,10 @@ import com.weightwatchers.reactive.kinesis.producer.KinesisProducerActor._
 import org.mockito.Mockito._
 import org.scalatest.mockito.MockitoSugar
 import org.scalatest.{BeforeAndAfterAll, FreeSpecLike, Matchers}
-
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
+
+import com.weightwatchers.reactive.kinesis.producer.ProducerConf.ThrottlingConf
 
 //scalastyle:off magic.number
 class KinesisProducerActorSpec
@@ -162,7 +163,8 @@ class KinesisProducerActorSpec
       when(producer.outstandingRecordsCount()).thenReturn(0)
 
       //When we send a SendWithCallback
-      val producerActor = TestActorRef(KinesisProducerActor.props(producer))
+      val producerActor =
+        TestActorRef(KinesisProducerActor.props(producer, 0, true))
 
       producerActor ! PoisonPill
 
